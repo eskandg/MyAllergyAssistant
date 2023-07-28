@@ -25,6 +25,20 @@ function ScannerButtons({isDetected, openCameraRoll, onTakeScan, changeScanMode}
     useEffect(() => {
         // wrapped in a timeout as a hack to fix toast from appearing in different screens
         const id = setTimeout(() => {
+          if (isFocused) {
+            switch (scanMode) {
+              case ScanMode.Barcode:
+                setModeStyle({color: ScanBarcodeColor, icon: ScanBarcodeIconName});
+                break;
+              case ScanMode.Detect:
+                setModeStyle({color: ScanBothColor, icon: ScanBothIconName});
+                break;
+              case ScanMode.Text:
+                setModeStyle({color: ScanIngredientsColor, icon: ScanIngredientsIconName});
+                break;
+            }
+          }
+
           if (!isAppLoading && isFocused) {
             switch (scanMode) {
               case ScanMode.Barcode:
@@ -41,13 +55,13 @@ function ScannerButtons({isDetected, openCameraRoll, onTakeScan, changeScanMode}
                 break;
             }
           }
-        }, 1)
+        }, 0.01)
 
         return () => {
           clearTimeout(id);
         }
-    }, [scanMode, isFocused]);
 
+    }, [scanMode, isFocused]);
 
     return (
       <View style={styles.bottomButtonsContainer}>

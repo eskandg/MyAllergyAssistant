@@ -1,6 +1,6 @@
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
-import React from "react";
+import React, {useEffect} from "react";
 
 function SafetyResult({style = {}, userAllergensFound, userMayContain, determined = true, ingredientsUnavailable = false, productReports = [], isBarcodeResult = false}) {
     return (
@@ -8,7 +8,7 @@ function SafetyResult({style = {}, userAllergensFound, userMayContain, determine
         <View
             style={{
                 ...style,
-                ...styles.container,
+                ...styles.container,// im gonna get a QR code that brings to google drive apk just to have on final slide, like last year
                 borderBottomColor: determined ? (
                     userAllergensFound.length > 0 ? "red"
                     : ((productReports.length == 0 && (!ingredientsUnavailable && userMayContain.length == 0)) ? "green" : "orange")

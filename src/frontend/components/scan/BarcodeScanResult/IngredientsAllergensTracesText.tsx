@@ -12,25 +12,29 @@ function IngredientsAllergensTracesText({scan, setSafetyResult}) {
     const [translatedAllergensText, setTranslatedAllergensText] = useState("translating..");
     const [translatedTracesText, setTranslatedTracesText] = useState("translating..");
     const [translatedIngredientsText, setTranslatedIngredientsText] = useState("translating..");
+    const [alreadyTranslated, setAlreadyTranslated] = useState(false);
 
     const translate = async () => {
         let res;
         let completeText = ""; // to help determine and clarify safety of a product to the user using SafetyResult
-        if (translatedIngredientsText === "translating.." && scan) {
+        if ((translatedAllergensText === "translating.." || alreadyTranslated) && scan) {
             res = await translateIngredientText();
             completeText += " " + res;
+            setAlreadyTranslated(true);
 
             setTranslatedIngredientsText(res);
         }
-        if (translatedAllergensText === "translating.." && scan) {
+        if ((translatedAllergensText === "translating.." || alreadyTranslated) && scan) {
             res = await translateAllergens(scan?.allergens);
             completeText += " " + res;
+            setAlreadyTranslated(true);
 
             setTranslatedAllergensText(res);
         }
-        if (translatedTracesText === "translating.." && scan) {
+        if ((translatedAllergensText === "translating.." || alreadyTranslated) && scan) {
             res = await translateAllergens(scan?.traces_tags)
             completeText += " " + res;
+            setAlreadyTranslated(true);
 
             setTranslatedTracesText(res);
         }
@@ -39,7 +43,7 @@ function IngredientsAllergensTracesText({scan, setSafetyResult}) {
     }
 
     const translateIngredientText = async () => {
-        if (translatedIngredientsText === "translating.."){
+        if (translatedIngredientsText === "translating.." || alreadyTranslated){
             return `${await translateIngredients(scan?.ingredients_text)}`;
         }
     }

@@ -17,6 +17,7 @@ import ReceiveProductNotifications from "../../scan/ReceiveProductNotifications"
 import ReportButtons from "./ReportButtons";
 import SafetyResult from "../SafetyResult";
 import AllergenListedAsTable from "../AllergenListedAsTable";
+import {useIsFocused} from "@react-navigation/native";
 
 
 // Used by ScanResult, for barcode scans
